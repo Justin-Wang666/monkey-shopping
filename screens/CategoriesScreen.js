@@ -1,20 +1,30 @@
-import React from 'react'
-import {View, Text, StyleSheet} from 'react-native';
+import React from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { CATEGORIES } from '../data/dummy-Data';
 
-const CategoriesScreen = () => {
-    return (
-            <View style={styles.categoriesScreen}>
-            <Text> This is the CategoriesScreen </Text>
-        </View>
-    )
+const CategoriesScreen = ({ navigation }) => {
+
+    const renderCategory = (data) => {
+        return (
+            <View style={styles.gridItems}>
+                <Text>{data.index +1} - {data.item.title} </Text>
+            </View>
+        )
+    };
+    return <FlatList data={CATEGORIES} numColumns={3} renderItem={renderCategory} />;
 };
+
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
+        flex: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#e011ee'
+    },
+    gridItems: {
+        flex: 1, 
+        height: 150,
+
     }
 })
 

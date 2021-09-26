@@ -1,31 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import CategoriesScreen from './screens/CategoriesScreen';
 import CategoryMealsScreen from './screens/CategoryMealsScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
-import FavouritesScreen from './screens/FavouritesScreen';
-import FilterScreen from './screens/FilterScreen';
+//import FavouritesScreen from './screens/FavouritesScreen';
+//import FilterScreen from './screens/FilterScreen';
+import AppLoading from 'expo-app-loading';
+import { useFonts, Allan_400Regular } from '@expo-google-fonts/allan';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hi welcome to the shopping App</Text>
-      <CategoriesScreen/>
-      <CategoryMealsScreen/>
-      <MealDetailScreen/>
-      <FavouritesScreen/>
-      <FilterScreen/>
-      <StatusBar style="auto" />
-    </View>
-  );
-};
+  const [fontsLoaded] = useFonts({
+    Allan_400Regular
+  });
+
+  if (fontsLoaded) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Categories">
+          <Stack.Screen name="Categories" component={CategoriesScreen} />
+          <Stack.Screen name="CategoryMeals" component={CategoryMealsScreen} />
+          <Stack.Screen name="MealDetials" component={MealDetailScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return <AppLoading />;
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+  },
+  text: {
+    fontFamily: 'Allan_400Regular',
+    fontSize: 12,
   },
 });
